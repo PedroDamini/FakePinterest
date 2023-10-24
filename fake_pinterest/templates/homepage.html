@@ -10,10 +10,24 @@
     </title>
 </head>
 {% block body %}
-<body>
-    <h1>FakePinterest!</h1>
+    <body>
+        <h1>FakePinterest!</h1>
 
-    <h2>Hello wolrd!</h2>
-</body>
+        <h2>Hello wolrd!</h2>
+        {% block formulario %}
+        <form method="POST">
+            {{ form.csrf_token }}
+
+                {{ form.email.label()  }}
+                {{ form.email() }}
+
+                {{ form.senha.label() }}
+                {{ form.senha() }}
+                
+                {{ form.botao_confirmacao() }}
+
+        </form>
+        {% endblock %}
+    </body>
 {% endblock %}
 </html>
