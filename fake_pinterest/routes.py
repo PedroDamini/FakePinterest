@@ -36,8 +36,11 @@ def criar_conta():
 @app.route("/perfil/<username_usuario>")
 @login_required
 def perfil(username_usuario):
-    usuario = Usuario.query.filter_by(username=username_usuario.data).first()
-    return render_template("perfil.html", usuario=usuario)
+    if username_usuario == current_user.username:
+        return render_template("perfil.html", usuario=current_user)
+    else:
+        usuario = Usuario.query.filter_by(username=username_usuario).first()
+        return render_template("perfil.html", usuario=usuario)
 
 @app.route("/logout")
 @login_required
