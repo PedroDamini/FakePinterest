@@ -11,7 +11,7 @@ def homepage():
         usuario = Usuario.query.filter_by(email=form_login.email.data).first()
         if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
             login_user(usuario)
-            return redirect(url_for("perfil", usuario=usuario.username))
+            return redirect(url_for("perfil", username_usuario=usuario.username))
         
     return render_template("homepage.html", form=form_login)
 
@@ -29,13 +29,14 @@ def criar_conta():
             database.session.add(usuario)
             database.session.commit()
             login_user(usuario, remember=True)
-            return redirect(url_for("perfil", usuario=usuario.username))
+            return redirect(url_for("perfil", username_usuario=usuario.username))
 
     return render_template("criar_conta.html", form=form_criar_conta)
 
-@app.route("/perfil/<usuario>")
+@app.route("/perfil/<username_usuario>")
 @login_required
-def perfil(usuario):
+def perfil(username_usuario):
+    usuario = Usuario.query.filter_by(username=username_usuario.data).first()
     return render_template("perfil.html", usuario=usuario)
 
 @app.route("/logout")
