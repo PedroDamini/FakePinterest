@@ -3,6 +3,8 @@ from fake_pinterest import app, database, bcrypt
 from fake_pinterest.models import Usuario, Foto
 from flask_login import login_required, login_user, logout_user, current_user
 from fake_pinterest.forms import FormCriarConta, FormLogin, FormFoto
+from werkzeug.utils import secure_filename
+import os
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
@@ -35,9 +37,17 @@ def criar_conta():
 
 @app.route("/perfil/<username_usuario>")
 @login_required
-def perfil(username_usuario):
+def perfil(username_usuario, methods=["GET", "POST"]):
     if username_usuario == current_user.username:
         form_foto = FormFoto()
+        if form_foto.validate_on_submit():
+            arquivo = form_foto.foto.data
+            nome_seguro = secure_filename(arquivo.filename)
+            caminho = ...
+            arquivo.save()
+            foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
+            database.session.add(foto)
+            database.session.commit()
         return render_template("perfil.html", usuario=current_user, form=form_foto)
     else:
         usuario = Usuario.query.filter_by(username=username_usuario).first()
