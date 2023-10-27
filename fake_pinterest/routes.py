@@ -35,16 +35,18 @@ def criar_conta():
 
     return render_template("criar_conta.html", form=form_criar_conta)
 
-@app.route("/perfil/<username_usuario>")
+@app.route("/perfil/<username_usuario>", methods=["GET", "POST"])
 @login_required
-def perfil(username_usuario, methods=["GET", "POST"]):
+def perfil(username_usuario):
     if username_usuario == current_user.username:
         form_foto = FormFoto()
         if form_foto.validate_on_submit():
             arquivo = form_foto.foto.data
             nome_seguro = secure_filename(arquivo.filename)
-            caminho = ...
-            arquivo.save()
+            caminho = os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                app.config["UPLOAD_FOLDER"],
+                                nome_seguro)
+            arquivo.save(caminho)
             foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
             database.session.add(foto)
             database.session.commit()

@@ -8,7 +8,7 @@ Perfil - {{ usuario }}
 <body>
 
     {% if form %}
-        <form method="post" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {{ form.csrf_token }}
 
             {{ form.foto }}
@@ -20,10 +20,8 @@ Perfil - {{ usuario }}
 
     <a href="{{ url_for('logout') }}">Sair</a>
 
-    <img src="{{ url_for('static', filename='fotos_posts/default.jpg') }}">
-
     {% for foto in usuario.fotos%}
-
+        <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}">
     {% endfor %}
 
 </body>
