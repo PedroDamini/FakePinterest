@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect
 from fake_pinterest import app, database, bcrypt
 from fake_pinterest.models import Usuario, Foto
 from flask_login import login_required, login_user, logout_user, current_user
-from fake_pinterest.forms import FormCriarConta, FormLogin
+from fake_pinterest.forms import FormCriarConta, FormLogin, FormFoto
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
@@ -37,10 +37,11 @@ def criar_conta():
 @login_required
 def perfil(username_usuario):
     if username_usuario == current_user.username:
-        return render_template("perfil.html", usuario=current_user)
+        form_foto = FormFoto()
+        return render_template("perfil.html", usuario=current_user, form=form_foto)
     else:
         usuario = Usuario.query.filter_by(username=username_usuario).first()
-        return render_template("perfil.html", usuario=usuario)
+        return render_template("perfil.html", usuario=usuario, form=None)
 
 @app.route("/logout")
 @login_required
