@@ -6,6 +6,7 @@ Perfil - {{ usuario }}
 
 {% block body %}
 <body>
+    {% include 'navbar.html' %}
 
     {% if form %}
         <form method="POST" enctype="multipart/form-data">

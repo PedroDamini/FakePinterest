@@ -60,3 +60,8 @@ def perfil(username_usuario):
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+@app.route("/feed")
+@login_required
+def feed():
+    return render_template("feed.html")
