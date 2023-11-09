@@ -4,7 +4,7 @@
 
     {% include 'navbar.html' %}
 
-    <h1>Feed principal </h1>
+    <h1 class="titulo">Feed principal </h1>
     
     {% for foto in fotos%}
         <a href="{{ url_for('perfil', username_usuario=foto.usuario.username) }}">
