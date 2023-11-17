@@ -20,7 +20,7 @@
     </a>
 
     <div class="restante-nav">
-        <p class="botao-perfil"><a href="{{ url_for('perfil', username_usuario=current_user.username)}}" class="link-nav">Perfil</a></p>
+        <p style="align-items: flex-end;" class="botao-perfil"><a href="{{ url_for('perfil', username_usuario=current_user.username)}}" class="link-nav">Perfil</a></p>
         <a href="{{ url_for('logout') }}" class="link-nav">Sair</a>
     </div>
     </nav>
